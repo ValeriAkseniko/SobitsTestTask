@@ -14,7 +14,7 @@ namespace DataAccess.Repositories
             this.sobitsTestTaskDbContext = sobitsTestTaskDbContext;
         }
 
-        public async Task CreateUser(User user)
+        public async Task CreateAsync(User user)
         {
             await sobitsTestTaskDbContext.Users.AddAsync(user);
             await sobitsTestTaskDbContext.SaveChangesAsync();
@@ -31,7 +31,7 @@ namespace DataAccess.Repositories
                 .FirstOrDefaultAsync(x => x.Name == userName);
         }
 
-        public async Task RemoveUser(string userName)
+        public async Task RemoveAsync(string userName)
         {
             var entityDb = await sobitsTestTaskDbContext.Users
                 .FirstOrDefaultAsync(x => x.Name == userName);

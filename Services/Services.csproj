@@ -4,4 +4,11 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\InterfacesDataAccess\InterfacesDataAccess.csproj" />
+    <ProjectReference Include="..\InterfacesServices\InterfacesServices.csproj" />
+  </ItemGroup>
+
 </Project>

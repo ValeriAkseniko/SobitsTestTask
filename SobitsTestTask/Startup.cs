@@ -1,4 +1,6 @@
 using DataAccess;
+using DataAccess.Repositories;
+using InterfacesDataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,8 @@ namespace SobitsTestTask
             services.AddControllersWithViews();
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SobitsTestTaskDbContext>(options => options.UseSqlServer(connection));
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,10 +6,10 @@ namespace InterfacesDataAccess.Repositories
 {
     public interface IUserRepository : IDisposable
     {
-        Task CreateUser(User user);
+        Task CreateAsync(User user);
 
         Task<User> GetAsync(string userName);
 
-        Task RemoveUser(string userName);
+        Task RemoveAsync(string userName);
     }
 }

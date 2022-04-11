@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Entities
+﻿namespace Domain.User
 {
-    public class User
+    public class UserView
     {
-        [Key]
         public string Name { get; set; }
 
         public decimal? CostPerPerson { get; set; }
