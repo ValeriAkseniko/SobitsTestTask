@@ -21,20 +21,16 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("CostPerPerson")
+                    b.Property<decimal?>("CostPerPerson")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PaymentStatus")
+                    b.Property<bool?>("PaymentStatus")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("Name");
 
                     b.ToTable("Users");
                 });
