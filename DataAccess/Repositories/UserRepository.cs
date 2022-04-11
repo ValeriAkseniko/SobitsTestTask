@@ -1,6 +1,7 @@
 ﻿using Entities;
 using InterfacesDataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
@@ -12,6 +13,11 @@ namespace DataAccess.Repositories
         public UserRepository(SobitsTestTaskDbContext sobitsTestTaskDbContext)
         {
             this.sobitsTestTaskDbContext = sobitsTestTaskDbContext;
+        }
+
+        public async Task<List<User>> GetListAsync()
+        {
+            return await sobitsTestTaskDbContext.Users.ToListAsync();
         }
 
         public async Task CreateAsync(User user)

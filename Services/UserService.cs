@@ -3,6 +3,8 @@ using Entities;
 using InterfacesDataAccess.Repositories;
 using InterfacesServices;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Services
@@ -16,8 +18,15 @@ namespace Services
             this.userRepository = userRepository;
         }
 
-        public async Task CreateUserAsync(User user)
+        public async Task CreateUserAsync(UserCreateRequest userRequest)
         {
+            User user = new User()
+            {
+                Name = userRequest.Name,
+                Balance = userRequest.Balance,
+                CostPerPerson = userRequest.CostPerPerson,
+                PaymentStatus = userRequest.PaymentStatus
+            };
             await userRepository.CreateAsync(user);
         }
 
@@ -36,6 +45,18 @@ namespace Services
                 CostPerPerson = user.CostPerPerson,
                 PaymentStatus = user.PaymentStatus
             };
+        }
+
+        public async Task<List<UserView>> GetListUserAsync()
+        {
+            var users = await userRepository.GetListAsync();
+            return users.Select(x => new UserView
+            {
+                Name = x.Name,
+                Balance = x.Balance,
+                CostPerPerson = x.CostPerPerson,
+                PaymentStatus = x.PaymentStatus
+            }).ToList();
         }
 
         public async Task RemoveUserAsync(string userName)
