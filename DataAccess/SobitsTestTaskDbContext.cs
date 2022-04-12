@@ -16,5 +16,6 @@ namespace DataAccess
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
     }
 }

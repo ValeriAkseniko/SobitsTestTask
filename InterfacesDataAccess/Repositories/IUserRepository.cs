@@ -12,8 +12,8 @@ namespace InterfacesDataAccess.Repositories
 
         Task CreateAsync(User user);
 
-        Task<User> GetAsync(string userName);
+        Task<User> GetAsync(Guid id);
 
-        Task RemoveAsync(string userName);
+        Task RemoveAsync(Guid id);
     }
 }

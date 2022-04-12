@@ -3,27 +3,24 @@ using InterfacesDataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class PurchaseRepository : IPurchaseRepository
     {
         private readonly SobitsTestTaskDbContext sobitsTestTaskDbContext;
 
-        public UserRepository(SobitsTestTaskDbContext sobitsTestTaskDbContext)
+        public PurchaseRepository(SobitsTestTaskDbContext sobitsTestTaskDbContext)
         {
             this.sobitsTestTaskDbContext = sobitsTestTaskDbContext;
         }
 
-        public async Task<List<User>> GetListAsync()
+        public async Task CreateAsync(Purchase purchase)
         {
-            return await sobitsTestTaskDbContext.Users.ToListAsync();
-        }
-
-        public async Task CreateAsync(User user)
-        {
-            await sobitsTestTaskDbContext.Users.AddAsync(user);
+            await sobitsTestTaskDbContext.Purchases.AddAsync(purchase);
             await sobitsTestTaskDbContext.SaveChangesAsync();
         }
 
@@ -32,15 +29,20 @@ namespace DataAccess.Repositories
             sobitsTestTaskDbContext.Dispose();
         }
 
-        public async Task<User> GetAsync(Guid id)
+        public async Task<Purchase> GetAsync(Guid id)
         {
-            return await sobitsTestTaskDbContext.Users
+            return await sobitsTestTaskDbContext.Purchases
                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<Purchase>> GetListAsync()
+        {
+            return await sobitsTestTaskDbContext.Purchases.ToListAsync();
         }
 
         public async Task RemoveAsync(Guid id)
         {
-            var entityDb = await sobitsTestTaskDbContext.Users
+            var entityDb = await sobitsTestTaskDbContext.Purchases
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Deleted;

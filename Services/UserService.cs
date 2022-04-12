@@ -22,10 +22,9 @@ namespace Services
         {
             User user = new User()
             {
+                Id = Guid.NewGuid(),
                 Name = userRequest.Name,
-                Balance = userRequest.Balance,
-                CostPerPerson = userRequest.CostPerPerson,
-                PaymentStatus = userRequest.PaymentStatus
+                Balance = userRequest.Balance
             };
             await userRepository.CreateAsync(user);
         }
@@ -41,9 +40,7 @@ namespace Services
             return new UserView
             {
                 Name = user.Name,
-                Balance = user.Balance,
-                CostPerPerson = user.CostPerPerson,
-                PaymentStatus = user.PaymentStatus
+                Balance = user.Balance
             };
         }
 
@@ -53,9 +50,7 @@ namespace Services
             return users.Select(x => new UserView
             {
                 Name = x.Name,
-                Balance = x.Balance,
-                CostPerPerson = x.CostPerPerson,
-                PaymentStatus = x.PaymentStatus
+                Balance = x.Balance
             }).ToList();
         }
 

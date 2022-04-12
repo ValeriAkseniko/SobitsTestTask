@@ -1,15 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities
 {
     public class User
     {
-        [Key]
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
-
-        public decimal? CostPerPerson { get; set; }
-
-        public bool? PaymentStatus { get; set; }
 
         public decimal Balance { get; set; }
     }
