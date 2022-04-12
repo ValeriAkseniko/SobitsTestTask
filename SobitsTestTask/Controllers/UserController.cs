@@ -3,7 +3,6 @@ using InterfacesServices;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SobitsTestTask.Controllers
@@ -24,15 +23,15 @@ namespace SobitsTestTask.Controllers
         }
 
         [Route("user/remove")]
-        public async Task RemoveUser(string userName)
+        public async Task RemoveUser(Guid id)
         {
-            await userService.RemoveUserAsync(userName);
+            await userService.RemoveUserAsync(id);
         }
 
         [Route("user/getUser")]
-        public async Task<UserView> GetUser(string userName)
+        public async Task<UserView> GetUser(Guid id)
         {
-            return await userService.GetUserAsync(userName);
+            return await userService.GetUserAsync(id);
         }
 
         [Route("user/getListUser")]

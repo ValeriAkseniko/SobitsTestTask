@@ -38,6 +38,12 @@ namespace DataAccess.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<User> GetByNameAsync(string name)
+        {
+            return await sobitsTestTaskDbContext.Users
+                .FirstOrDefaultAsync(x => x.Name == name);
+        }
+
         public async Task RemoveAsync(Guid id)
         {
             var entityDb = await sobitsTestTaskDbContext.Users

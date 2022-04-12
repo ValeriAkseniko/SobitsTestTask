@@ -34,13 +34,13 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public async Task<UserView> GetUserAsync(string userName)
+        public async Task<UserView> GetUserAsync(Guid id)
         {
-            var user = await userRepository.GetAsync(userName);
+            var entityDb = await userRepository.GetAsync(id);
             return new UserView
             {
-                Name = user.Name,
-                Balance = user.Balance
+                Name = entityDb.Name,
+                Balance = entityDb.Balance
             };
         }
 
@@ -54,9 +54,9 @@ namespace Services
             }).ToList();
         }
 
-        public async Task RemoveUserAsync(string userName)
+        public async Task RemoveUserAsync(Guid id)
         {
-            await userRepository.RemoveAsync(userName);
+            await userRepository.RemoveAsync(id);
         }
     }
 }
