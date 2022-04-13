@@ -16,24 +16,33 @@ namespace SobitsTestTask.Controllers
             this.userService = userService;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
         [Route("user/create")]
         public async Task CreateUser(UserCreateRequest user)
         {
             await userService.CreateUserAsync(user);
         }
 
+        [HttpPost]
         [Route("user/remove")]
         public async Task RemoveUser(Guid id)
         {
             await userService.RemoveUserAsync(id);
         }
 
+        [HttpGet]
         [Route("user/getUser")]
         public async Task<UserView> GetUser(Guid id)
         {
             return await userService.GetUserAsync(id);
         }
 
+        [HttpGet]
         [Route("user/getListUser")]
         public async Task<List<UserView>> GetListUser()
         {

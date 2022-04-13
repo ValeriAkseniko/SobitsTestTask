@@ -31,7 +31,7 @@ namespace Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            userRepository.Dispose();
         }
 
         public async Task<UserView> GetUserAsync(Guid id)
