@@ -22,28 +22,25 @@ namespace Services
         {
             User user = new User()
             {
+                Id = Guid.NewGuid(),
                 Name = userRequest.Name,
-                Balance = userRequest.Balance,
-                CostPerPerson = userRequest.CostPerPerson,
-                PaymentStatus = userRequest.PaymentStatus
+                Balance = userRequest.Balance
             };
             await userRepository.CreateAsync(user);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            userRepository.Dispose();
         }
 
-        public async Task<UserView> GetUserAsync(string userName)
+        public async Task<UserView> GetUserAsync(Guid id)
         {
-            var user = await userRepository.GetAsync(userName);
+            var entityDb = await userRepository.GetAsync(id);
             return new UserView
             {
-                Name = user.Name,
-                Balance = user.Balance,
-                CostPerPerson = user.CostPerPerson,
-                PaymentStatus = user.PaymentStatus
+                Name = entityDb.Name,
+                Balance = entityDb.Balance
             };
         }
 
@@ -53,15 +50,13 @@ namespace Services
             return users.Select(x => new UserView
             {
                 Name = x.Name,
-                Balance = x.Balance,
-                CostPerPerson = x.CostPerPerson,
-                PaymentStatus = x.PaymentStatus
+                Balance = x.Balance
             }).ToList();
         }
 
-        public async Task RemoveUserAsync(string userName)
+        public async Task RemoveUserAsync(Guid id)
         {
-            await userRepository.RemoveAsync(userName);
+            await userRepository.RemoveAsync(id);
         }
     }
 }

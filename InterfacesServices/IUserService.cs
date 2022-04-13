@@ -9,10 +9,10 @@ namespace InterfacesServices
     {
         public Task CreateUserAsync(UserCreateRequest user);
 
-        public Task RemoveUserAsync(string userName);
+        public Task RemoveUserAsync(Guid id);
 
         public Task<List<UserView>> GetListUserAsync();
 
-        public Task<UserView> GetUserAsync(string userName);
+        public Task<UserView> GetUserAsync(Guid id);
     }
 }

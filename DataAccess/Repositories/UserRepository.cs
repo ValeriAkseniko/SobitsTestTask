@@ -1,7 +1,9 @@
 ﻿using Entities;
 using InterfacesDataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
@@ -31,20 +33,33 @@ namespace DataAccess.Repositories
             sobitsTestTaskDbContext.Dispose();
         }
 
-        public async Task<User> GetAsync(string userName)
+        public async Task<User> GetAsync(Guid id)
         {
             return await sobitsTestTaskDbContext.Users
-                .FirstOrDefaultAsync(x => x.Name == userName);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task RemoveAsync(string userName)
+        public async Task<User> GetByNameAsync(string name)
+        {
+            return await sobitsTestTaskDbContext.Users
+                .FirstOrDefaultAsync(x => x.Name == name);
+        }
+
+        public async Task RemoveAsync(Guid id)
         {
             var entityDb = await sobitsTestTaskDbContext.Users
-                .FirstOrDefaultAsync(x => x.Name == userName);
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Deleted;
             sobitsTestTaskDbContext.Remove(entityDb);
             await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<UserByPurchase>> GetListByPurchaseId(Guid purchaseId)
+        {
+            return await sobitsTestTaskDbContext.UsersByPurchases
+                .Where(x => x.PurchaseId == purchaseId)
+                .ToListAsync();
         }
     }
 }

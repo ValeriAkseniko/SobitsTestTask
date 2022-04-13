@@ -10,10 +10,14 @@ namespace InterfacesDataAccess.Repositories
 
         public Task<List<User>> GetListAsync();
 
-        Task CreateAsync(User user);
+        public Task CreateAsync(User user);
 
-        Task<User> GetAsync(string userName);
+        public Task<User> GetAsync(Guid id);
 
-        Task RemoveAsync(string userName);
+        public Task RemoveAsync(Guid id);
+
+        public Task<User> GetByNameAsync(string name);
+
+        public Task<List<UserByPurchase>> GetListByPurchaseId(Guid purchaseId);
     }
 }
