@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SobitsTestTaskDbContext))]
-    [Migration("20220412094554_AddTable")]
-    partial class AddTable
+    [Migration("20220413124544_UpdateTable")]
+    partial class UpdateTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,9 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Buyer")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("BuyerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Sum")
                         .HasColumnType("decimal(18,2)");
@@ -53,21 +56,43 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PurchaseId")
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Entities.UserByPurchase", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Debt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("PurchaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("Users");
+                    b.ToTable("UsersByPurchases");
                 });
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Entities.UserByPurchase", b =>
                 {
                     b.HasOne("Entities.Purchase", null)
                         .WithMany("Users")
-                        .HasForeignKey("PurchaseId");
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Purchase", b =>

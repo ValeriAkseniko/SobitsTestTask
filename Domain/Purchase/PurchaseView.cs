@@ -14,6 +14,6 @@ namespace Domain.Purchase
 
         public bool Status { get; set; }
 
-        public List<UserView> Users { get; set; }
+        public List<UserByPurchaseView> Users { get; set; }
     }
 }

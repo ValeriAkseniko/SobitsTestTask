@@ -4,14 +4,16 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SobitsTestTaskDbContext))]
-    partial class SobitsTestTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220413121229_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Buyer")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("BuyerId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Sum")
                         .HasColumnType("decimal(18,2)");

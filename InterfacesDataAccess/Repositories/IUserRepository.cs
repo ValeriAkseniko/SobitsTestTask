@@ -17,5 +17,7 @@ namespace InterfacesDataAccess.Repositories
         public Task RemoveAsync(Guid id);
 
         public Task<User> GetByNameAsync(string name);
+
+        public Task<List<UserByPurchase>> GetListByPurchaseId(Guid purchaseId);
     }
 }

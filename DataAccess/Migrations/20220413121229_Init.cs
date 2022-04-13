@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class AddTable : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,23 +27,37 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PurchaseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsersByPurchases",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PurchaseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    Debt = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersByPurchases", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Purchases_PurchaseId",
+                        name: "FK_UsersByPurchases_Purchases_PurchaseId",
                         column: x => x.PurchaseId,
                         principalTable: "Purchases",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_PurchaseId",
-                table: "Users",
+                name: "IX_UsersByPurchases_PurchaseId",
+                table: "UsersByPurchases",
                 column: "PurchaseId");
         }
 
@@ -51,6 +65,9 @@ namespace DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "UsersByPurchases");
 
             migrationBuilder.DropTable(
                 name: "Purchases");

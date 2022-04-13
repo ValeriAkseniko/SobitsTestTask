@@ -11,8 +11,10 @@ namespace Entities
 
         public string Buyer { get; set; }
 
+        public Guid BuyerId { get; set; }
+
         public decimal Sum { get; set; }
 
-        public List<User> Users { get; set; }
+        public List<UserByPurchase> Users { get; set; }
     }
 }

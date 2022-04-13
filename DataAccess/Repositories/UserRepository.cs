@@ -3,6 +3,7 @@ using InterfacesDataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
@@ -52,6 +53,13 @@ namespace DataAccess.Repositories
             sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Deleted;
             sobitsTestTaskDbContext.Remove(entityDb);
             await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<UserByPurchase>> GetListByPurchaseId(Guid purchaseId)
+        {
+            return await sobitsTestTaskDbContext.UsersByPurchases
+                .Where(x => x.PurchaseId == purchaseId)
+                .ToListAsync();
         }
     }
 }

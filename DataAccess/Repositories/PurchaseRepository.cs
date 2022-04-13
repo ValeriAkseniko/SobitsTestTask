@@ -30,12 +30,15 @@ namespace DataAccess.Repositories
         public async Task<Purchase> GetAsync(Guid id)
         {
             return await sobitsTestTaskDbContext.Purchases
+                .Include(x=>x.Users)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Purchase>> GetListAsync()
         {
-            return await sobitsTestTaskDbContext.Purchases.ToListAsync();
+            return await sobitsTestTaskDbContext.Purchases
+                .Include(x=>x.Users)
+                .ToListAsync();
         }
 
         public async Task RemoveAsync(Guid id)
