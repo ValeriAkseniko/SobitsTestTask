@@ -16,24 +16,33 @@ namespace SobitsTestTask.Controllers
             this.purchaseService = purchaseService;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
         [Route("purchase/create")]
         public async Task CreatePurchase(PurchaseCreateRequest purchase)
         {
             await purchaseService.CreatePurchaseAsync(purchase);
         }
 
+        [HttpPost]
         [Route("purchase/remove")]
         public async Task RemovePurchase(Guid id)
         {
             await purchaseService.RemovePurchaseAsync(id);
         }
 
+        [HttpGet]
         [Route("purchase/getPurchase")]
         public async Task<PurchaseView> GetPurchase(Guid id)
         {
             return await purchaseService.GetPurchaseAsync(id);
         }
 
+        [HttpGet]
         [Route("purchase/getListPurchase")]
         public async Task<List<PurchaseView>> GetListPurchase()
         {

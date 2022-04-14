@@ -7,6 +7,7 @@
 async function Find() {
 
     const users = await FindListUser();
+    console.log(users);
     FillUsers(users);
 }
 
