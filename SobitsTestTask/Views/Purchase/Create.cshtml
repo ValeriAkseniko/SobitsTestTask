@@ -1,0 +1,38 @@
+﻿<div class="modal-content">
+    <div class="model-header">
+        <h3 class="modal-title" id="exampleModalLabel"><b>Create Purchase</b></h3>
+    </div>
+    <div class="model-body">
+        <div class="form-group">
+            <label class="col-form-label">Title</label>
+            <input type="text" class="form-control" id="title-purchase"
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label">Sum</label>
+            <input type="text" class="form-control" id="sum-purchase"
+        </div>
+
+        <div class="form-group">
+
+            <label class="col-form-label">Buyer</label>
+            <select class="form-control" id="buyer-list">
+            </select>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="CreateItem()">Create</button>
+        </div>
+    </div>
+</div>
+
+
+
+    @section Scripts
+    {
+        <script src="~/js/Request/User.js"></script>           
+        <script src="~/js/Request/Purchase.js"></script>
+        <script src="~/js/View/Purchase/Create.js"></script>
+    }

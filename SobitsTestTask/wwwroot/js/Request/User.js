@@ -2,7 +2,7 @@
     return await $.ajax({
         type: 'GET',
         accepts: "application/json",
-        url: "user/getListUser",
+        url: "/user/getListUser",
         data: null
     });
 }

@@ -19,13 +19,13 @@ function FillUsers(users) {
 }
 function CreateUsersRow(user) {
 
-    var button = `<a href=" " class="btn btn-outline-danger">Delete</a>`;
+    var buttonDelete = `<a href=" " class="btn btn-outline-danger">Delete</a>`;
     
 
     const row = `<tr>
-            <td width="40%">${user.name}</td>
-            <td width="40%">${user.balance}</td>
-            <td width="20%">${button}</td>
+            <td width="30%">${user.name}</td>
+            <td width="30%">${user.balance}</td>
+            <td width="20%">${buttonDelete}</td>
         </tr>`;
     return row;
 }

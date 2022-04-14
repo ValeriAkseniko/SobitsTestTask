@@ -6,3 +6,12 @@
         data: null
     });
 }
+
+async function CreatePurchase(data) {
+    return await $.ajax({
+        type: 'POST',
+        accepts: "application/json",
+        url: "/purchase/create",
+        data: data
+    });
+}

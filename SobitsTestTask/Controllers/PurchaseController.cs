@@ -21,6 +21,11 @@ namespace SobitsTestTask.Controllers
             return View();
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         [Route("purchase/create")]
         public async Task CreatePurchase(PurchaseCreateRequest purchase)
