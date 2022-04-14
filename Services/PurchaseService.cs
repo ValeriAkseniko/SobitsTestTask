@@ -57,6 +57,7 @@ namespace Services
             var entitiesDb = await purchaseRepository.GetListAsync();
             return entitiesDb.Select(x => new PurchaseView
             {
+                Id = x.Id,
                 Buyer = x.Buyer,
                 Title = x.Title,
                 Users = x.Users.Select(z => new UserByPurchaseView() 
