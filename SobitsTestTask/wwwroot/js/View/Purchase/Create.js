@@ -16,7 +16,7 @@ async function CreateItem() {
     const data = {
         Title: $('#title-purchase').val(),
         Sum: $('#sum-purchase').val(),
-        BuyerId: $('#buyer').val()
+        BuyerId: $('#buyer-list').val()
     };
     console.log(data);
     await CreatePurchase(data);

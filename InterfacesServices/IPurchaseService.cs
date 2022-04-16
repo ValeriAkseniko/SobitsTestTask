@@ -14,5 +14,7 @@ namespace InterfacesServices
         public Task<List<PurchaseView>> GetListPurchaseAsync();
 
         public Task<PurchaseView> GetPurchaseAsync(Guid id);
+
+        public Task PaymentForPurchase(Guid purchaseId, Guid userid);
     }
 }

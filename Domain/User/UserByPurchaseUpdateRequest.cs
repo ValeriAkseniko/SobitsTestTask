@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Entities
+namespace Domain.User
 {
-    public class UserByPurchase
+    public class UserByPurchaseUpdateRequest
     {
         public Guid Id { get; set; }
 

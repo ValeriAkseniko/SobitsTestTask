@@ -2,7 +2,7 @@
 
 namespace Domain.User
 {
-    public class UserView
+    public class UserUpdateRequest
     {
         public Guid Id { get; set; }
 

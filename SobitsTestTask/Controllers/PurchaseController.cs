@@ -27,6 +27,13 @@ namespace SobitsTestTask.Controllers
         }
 
         [HttpPost]
+        [Route("purchase/payment")]
+        public async Task PaymentForPurchase(Guid purchaseId,Guid userId)
+        {
+            await purchaseService.PaymentForPurchase(purchaseId, userId);
+        }
+
+        [HttpPost]
         [Route("purchase/create")]
         public async Task CreatePurchase(PurchaseCreateRequest purchase)
         {
