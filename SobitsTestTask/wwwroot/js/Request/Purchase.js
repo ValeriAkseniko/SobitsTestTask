@@ -7,6 +7,15 @@
     });
 }
 
+async function PaymentByUser(data) {
+    return await $.ajax({
+        type: 'POST',
+        accepts: "application/json",
+        url: "purchase/payment",
+        data: data
+    });
+}
+
 async function CreatePurchase(data) {
     return await $.ajax({
         type: 'POST',

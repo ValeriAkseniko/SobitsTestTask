@@ -7,7 +7,6 @@
 async function Find() {
 
     const purchases = await FindListPurchase();
-    console.log(purchases);
     for (let i = 0; i < purchases.length; i++) {
         let table = `${purchases[i].title}
                     <br />${purchases[i].buyer}
@@ -19,20 +18,29 @@ async function Find() {
                     <br />`;
         $("#table-list").append(table);
         FillPurchase(purchases[i]);
-    }    
+    }
 }
 
 function FillPurchase(purchase) {
 
     for (let i = 0; i < purchase.users.length; i++) {
-        const row = CreatePurchaseRow(purchase.users[i]);
+        const row = CreatePurchaseRow(purchase.users[i], purchase.id);
         let id = `#${purchase.id}`;
         $(id).append(row);
     }
 }
-function CreatePurchaseRow(userByPurchase) {
+async function Payment(userByPurchaseId, purchaseId) {
+     let data = {
+         PurchaseId: purchaseId,
+         UserId: userByPurchaseId
+    };    
+     PaymentByUser(data);
+}
 
-    var button = `<a href=" " class="btn btn-outline-danger">Payment</a>`;
+function CreatePurchaseRow(userByPurchase, purchaseId) {
+
+
+    var button = `<button type="button" class="btn btn-danger" onclick="Payment('${userByPurchase.id}', '${purchaseId}')">Payment</button>`;
 
     const row = `<tr>
             <td width="25%">${userByPurchase.userName}</td>

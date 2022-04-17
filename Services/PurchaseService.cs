@@ -58,11 +58,14 @@ namespace Services
             var entitiesDb = await purchaseRepository.GetListAsync();
             return entitiesDb.Select(x => new PurchaseView
             {
+                BuyerId = x.BuyerId,
                 Id = x.Id,
                 Buyer = x.Buyer,
                 Title = x.Title,
                 Users = x.Users.Select(z => new UserByPurchaseView()
                 {
+                    Id = z.Id,
+                    UserId = z.UserId,
                     UserName = z.UserName,
                     Debt = z.Debt,
                     Status = z.Status
@@ -95,11 +98,12 @@ namespace Services
         public async Task PaymentForPurchase(Guid purchaseId, Guid userid)
         {
             var purchaseDb = await purchaseRepository.GetAsync(purchaseId);
-            var userDb = await userRepository.GetAsync(userid);
             var buyerByPurchase = await userRepository.GetAsync(purchaseDb.BuyerId);
             var userByPurchase = purchaseDb.Users.FirstOrDefault(x => x.Id == userid);
+            var userDb = await userRepository.GetAsync(userByPurchase.UserId);
 
-            if (userDb.Balance >= userByPurchase.Debt)
+
+            if (userDb.Balance >= userByPurchase.Debt && userByPurchase.Status == false)
             {
                 var newUserDb = new User()
                 {

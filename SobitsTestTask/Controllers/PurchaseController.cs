@@ -1,4 +1,5 @@
-﻿using Domain.Purchase;
+﻿using Domain.ModelForController;
+using Domain.Purchase;
 using InterfacesServices;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,10 +28,10 @@ namespace SobitsTestTask.Controllers
         }
 
         [HttpPost]
-        [Route("purchase/payment")]
-        public async Task PaymentForPurchase(Guid purchaseId,Guid userId)
+        [Route("/purchase/payment")]
+        public async Task PaymentForPurchase(PaymentRequest paymentRequest)
         {
-            await purchaseService.PaymentForPurchase(purchaseId, userId);
+            await purchaseService.PaymentForPurchase(paymentRequest.PurchaseId, paymentRequest.UserId);
         }
 
         [HttpPost]
