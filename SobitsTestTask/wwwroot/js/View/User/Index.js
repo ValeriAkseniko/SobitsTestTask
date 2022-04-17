@@ -19,7 +19,7 @@ function FillUsers(users) {
 }
 function CreateUsersRow(user) {
 
-    var buttonDelete = `<a href=" " class="btn btn-outline-danger">Delete</a>`;
+    var buttonDelete = `<button type="button" class="btn btn-danger" onclick="DeleteUser('${user.id}')">Delete</button>`;
     
 
     const row = `<tr>
