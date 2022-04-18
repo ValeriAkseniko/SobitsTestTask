@@ -15,5 +15,7 @@ namespace InterfacesDataAccess.Repositories
 
         public Task<Purchase> GetAsync(Guid id);
 
+        public Task<List<Purchase>> GetListByBuyerAsync(Guid buyerId);
+
     }
 }

@@ -7,6 +7,7 @@
 async function Find() {
 
     const users = await FindListUser();
+    console.log(users);
     FillUsers(users);
 }
 
@@ -16,15 +17,16 @@ function FillUsers(users) {
         $("#users-list").append(row);
     }
 }
+
 function CreateUsersRow(user) {
 
-    var button = `<a href=" " class="btn btn-outline-danger">Delete</a>`;
+    var buttonDelete = `<button type="button" class="btn btn-danger" onclick="DeleteUser('${user.id}')">Delete</button>`;
     
 
     const row = `<tr>
-            <td width="40%">${user.name}</td>
-            <td width="40%">${user.balance}</td>
-            <td width="20%">${button}</td>
+            <td width="30%">${user.name}</td>
+            <td width="30%">${user.balance}</td>
+            <td width="20%">${buttonDelete}</td>
         </tr>`;
     return row;
 }

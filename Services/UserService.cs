@@ -12,10 +12,12 @@ namespace Services
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IPurchaseRepository purchaseRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IPurchaseRepository purchaseRepository)
         {
             this.userRepository = userRepository;
+            this.purchaseRepository = purchaseRepository;
         }
 
         public async Task CreateUserAsync(UserCreateRequest userRequest)
@@ -39,6 +41,7 @@ namespace Services
             var entityDb = await userRepository.GetAsync(id);
             return new UserView
             {
+                Id = entityDb.Id,
                 Name = entityDb.Name,
                 Balance = entityDb.Balance
             };
@@ -49,6 +52,7 @@ namespace Services
             var users = await userRepository.GetListAsync();
             return users.Select(x => new UserView
             {
+                Id = x.Id,
                 Name = x.Name,
                 Balance = x.Balance
             }).ToList();
@@ -56,7 +60,39 @@ namespace Services
 
         public async Task RemoveUserAsync(Guid id)
         {
+            var purchaseByBuyer = await purchaseRepository.GetListByBuyerAsync(id);
+            foreach (var item in purchaseByBuyer)
+            {
+                await purchaseRepository.RemoveAsync(item.Id);
+            }
             await userRepository.RemoveAsync(id);
+        }
+
+        public async Task UpdateUserAsync(UserUpdateRequest userUpdateRequest)
+        {
+            var user = new User
+            {
+                Id = userUpdateRequest.Id,
+                Name = userUpdateRequest.Name,
+                Balance = userUpdateRequest.Balance,
+            };
+
+            await userRepository.UpdateAsync(user);
+        }
+
+        public async Task UpdateUserByPurchase(UserByPurchaseUpdateRequest userByPurchaseUpdateRequest)
+        {
+            var user = new UserByPurchase
+            {
+                Id = userByPurchaseUpdateRequest.Id,
+                Status = userByPurchaseUpdateRequest.Status,
+                Debt = userByPurchaseUpdateRequest.Debt,
+                PurchaseId = userByPurchaseUpdateRequest.PurchaseId,
+                UserId = userByPurchaseUpdateRequest.UserId,
+                UserName = userByPurchaseUpdateRequest.UserName
+            };
+
+            await userRepository.UpdateByPurchaseAsync(user);
         }
     }
 }

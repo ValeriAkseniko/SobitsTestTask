@@ -61,5 +61,49 @@ namespace DataAccess.Repositories
                 .Where(x => x.PurchaseId == purchaseId)
                 .ToListAsync();
         }
+
+        public async Task UpdateAsync(User user)
+        {
+            var entityDb = await GetAsync(user.Id);
+
+            sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Modified;
+
+            entityDb.Balance = user.Balance;
+            entityDb.Name = user.Name;
+
+            await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
+
+        public async Task<UserByPurchase> GetByPurchaseAsync(Guid id)
+        {
+            return await sobitsTestTaskDbContext.UsersByPurchases
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task UpdateByPurchaseAsync(UserByPurchase userByPurchase)
+        {
+            var entityDb = await GetByPurchaseAsync(userByPurchase.Id);
+
+            sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Modified;
+
+            entityDb.Id = userByPurchase.Id;
+            entityDb.Debt = userByPurchase.Debt;
+            entityDb.PurchaseId = userByPurchase.PurchaseId;
+            entityDb.UserName = userByPurchase.UserName;
+            entityDb.UserId = userByPurchase.UserId;
+            entityDb.Status = userByPurchase.Status;
+
+            await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveByPurchase(Guid id)
+        {
+            var entityDb = await sobitsTestTaskDbContext.UsersByPurchases
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Deleted;
+            sobitsTestTaskDbContext.Remove(entityDb);
+            await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
     }
 }

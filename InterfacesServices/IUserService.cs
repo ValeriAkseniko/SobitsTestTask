@@ -14,5 +14,9 @@ namespace InterfacesServices
         public Task<List<UserView>> GetListUserAsync();
 
         public Task<UserView> GetUserAsync(Guid id);
+
+        public Task UpdateUserAsync(UserUpdateRequest userUpdateRequest);
+
+        public Task UpdateUserByPurchase(UserByPurchaseUpdateRequest userByPurchaseUpdateRequest);
     }
 }

@@ -19,5 +19,11 @@ namespace InterfacesDataAccess.Repositories
         public Task<User> GetByNameAsync(string name);
 
         public Task<List<UserByPurchase>> GetListByPurchaseId(Guid purchaseId);
+
+        public Task UpdateAsync(User user);
+
+        public Task UpdateByPurchaseAsync(UserByPurchase userByPurchase);
+
+        public Task RemoveByPurchase(Guid id);
     }
 }

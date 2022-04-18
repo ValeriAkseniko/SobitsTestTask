@@ -26,7 +26,7 @@ namespace Services
             var buyerEntity = await userRepository.GetAsync(purchase.BuyerId);
             var usersEntity = await userRepository.GetListAsync();
             usersEntity.Remove(buyerEntity);
-            var debt = purchase.Sum / usersEntity.Count;
+            var debt = Math.Ceiling(purchase.Sum / usersEntity.Count);
             var id = Guid.NewGuid();
             Purchase entity = new Purchase()
             {
@@ -36,6 +36,7 @@ namespace Services
                 Title = purchase.Title,
                 Users = usersEntity.Select(x => new UserByPurchase()
                 {
+                    UserId = x.Id,
                     UserName = x.Name,
                     Debt = debt,
                     PurchaseId = id,
@@ -57,13 +58,17 @@ namespace Services
             var entitiesDb = await purchaseRepository.GetListAsync();
             return entitiesDb.Select(x => new PurchaseView
             {
+                BuyerId = x.BuyerId,
+                Id = x.Id,
                 Buyer = x.Buyer,
                 Title = x.Title,
-                Users = x.Users.Select(z => new UserByPurchaseView() 
-                { 
+                Users = x.Users.Select(z => new UserByPurchaseView()
+                {
+                    Id = z.Id,
+                    UserId = z.UserId,
                     UserName = z.UserName,
                     Debt = z.Debt,
-                    Status = z.Status 
+                    Status = z.Status
                 }).ToList()
             }).ToList();
         }
@@ -87,7 +92,50 @@ namespace Services
 
         public async Task RemovePurchaseAsync(Guid id)
         {
+            var usersByPurchase = await userRepository.GetListByPurchaseId(id);
+            foreach (var item in usersByPurchase)
+            {
+                await userRepository.RemoveByPurchase(item.Id);
+            }
             await userRepository.RemoveAsync(id);
+        }
+
+        public async Task PaymentForPurchase(Guid purchaseId, Guid userid)
+        {
+            var purchaseDb = await purchaseRepository.GetAsync(purchaseId);
+            var buyerByPurchase = await userRepository.GetAsync(purchaseDb.BuyerId);
+            var userByPurchase = purchaseDb.Users.FirstOrDefault(x => x.Id == userid);
+            var userDb = await userRepository.GetAsync(userByPurchase.UserId);
+
+
+            if (userDb.Balance >= userByPurchase.Debt && userByPurchase.Status == false)
+            {
+                var newUserDb = new User()
+                {
+                    Id = userDb.Id,
+                    Name = userDb.Name,
+                    Balance = userDb.Balance - userByPurchase.Debt
+                };
+                var newBuyerDB = new User()
+                {
+                    Id = buyerByPurchase.Id,
+                    Name = buyerByPurchase.Name,
+                    Balance = buyerByPurchase.Balance + userByPurchase.Debt
+                };
+                var newUserByPurchase = new UserByPurchase()
+                {
+                    Id = userByPurchase.Id,
+                    Status = true,
+                    Debt = userByPurchase.Debt,
+                    PurchaseId = userByPurchase.PurchaseId,
+                    UserId = userByPurchase.UserId,
+                    UserName = userByPurchase.UserName
+                };
+                await userRepository.UpdateAsync(newUserDb);
+                await userRepository.UpdateAsync(newBuyerDB);
+                await userRepository.UpdateByPurchaseAsync(newUserByPurchase);
+            }
+
         }
     }
 }

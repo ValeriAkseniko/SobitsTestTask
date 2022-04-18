@@ -1,25 +1,26 @@
-﻿async function FindListUser() {
+﻿async function FindListPurchase() {
     return await $.ajax({
         type: 'GET',
         accepts: "application/json",
-        url: "/user/getListUser",
+        url: "purchase/getListPurchase",
         data: null
     });
 }
-async function CreateUser(data) {
+
+async function PaymentByUser(data) {
     return await $.ajax({
         type: 'POST',
         accepts: "application/json",
-        url: "/user/create",
+        url: "purchase/payment",
         data: data
     });
 }
 
-async function DeleteUser(id) {
+async function CreatePurchase(data) {
     return await $.ajax({
         type: 'POST',
         accepts: "application/json",
-        url: `/user/remove?id=${id}`,
-        data: null
+        url: "/purchase/create",
+        data: data
     });
 }

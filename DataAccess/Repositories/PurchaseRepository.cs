@@ -3,6 +3,7 @@ using InterfacesDataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
@@ -30,14 +31,14 @@ namespace DataAccess.Repositories
         public async Task<Purchase> GetAsync(Guid id)
         {
             return await sobitsTestTaskDbContext.Purchases
-                .Include(x=>x.Users)
+                .Include(x => x.Users)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Purchase>> GetListAsync()
         {
             return await sobitsTestTaskDbContext.Purchases
-                .Include(x=>x.Users)
+                .Include(x => x.Users)
                 .ToListAsync();
         }
 
@@ -49,6 +50,12 @@ namespace DataAccess.Repositories
             sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Deleted;
             sobitsTestTaskDbContext.Remove(entityDb);
             await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Purchase>> GetListByBuyerAsync(Guid buyerId)
+        {
+            return await sobitsTestTaskDbContext.Purchases
+                .Where(x => x.BuyerId == buyerId).ToListAsync();
         }
     }
 }
