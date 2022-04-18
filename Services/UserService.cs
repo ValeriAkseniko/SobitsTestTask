@@ -12,10 +12,12 @@ namespace Services
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IPurchaseRepository purchaseRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IPurchaseRepository purchaseRepository)
         {
             this.userRepository = userRepository;
+            this.purchaseRepository = purchaseRepository;
         }
 
         public async Task CreateUserAsync(UserCreateRequest userRequest)
@@ -58,6 +60,11 @@ namespace Services
 
         public async Task RemoveUserAsync(Guid id)
         {
+            var purchaseByBuyer = await purchaseRepository.GetListByBuyerAsync(id);
+            foreach (var item in purchaseByBuyer)
+            {
+                await purchaseRepository.RemoveAsync(item.Id);
+            }
             await userRepository.RemoveAsync(id);
         }
 

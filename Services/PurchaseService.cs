@@ -92,6 +92,11 @@ namespace Services
 
         public async Task RemovePurchaseAsync(Guid id)
         {
+            var usersByPurchase = await userRepository.GetListByPurchaseId(id);
+            foreach (var item in usersByPurchase)
+            {
+                await userRepository.RemoveByPurchase(item.Id);
+            }
             await userRepository.RemoveAsync(id);
         }
 

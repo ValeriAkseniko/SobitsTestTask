@@ -17,6 +17,7 @@ function FillUsers(users) {
         $("#users-list").append(row);
     }
 }
+
 function CreateUsersRow(user) {
 
     var buttonDelete = `<button type="button" class="btn btn-danger" onclick="DeleteUser('${user.id}')">Delete</button>`;

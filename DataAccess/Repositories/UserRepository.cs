@@ -95,5 +95,15 @@ namespace DataAccess.Repositories
 
             await sobitsTestTaskDbContext.SaveChangesAsync();
         }
+
+        public async Task RemoveByPurchase(Guid id)
+        {
+            var entityDb = await sobitsTestTaskDbContext.UsersByPurchases
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            sobitsTestTaskDbContext.Entry(entityDb).State = EntityState.Deleted;
+            sobitsTestTaskDbContext.Remove(entityDb);
+            await sobitsTestTaskDbContext.SaveChangesAsync();
+        }
     }
 }

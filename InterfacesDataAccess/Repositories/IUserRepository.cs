@@ -23,5 +23,7 @@ namespace InterfacesDataAccess.Repositories
         public Task UpdateAsync(User user);
 
         public Task UpdateByPurchaseAsync(UserByPurchase userByPurchase);
+
+        public Task RemoveByPurchase(Guid id);
     }
 }
