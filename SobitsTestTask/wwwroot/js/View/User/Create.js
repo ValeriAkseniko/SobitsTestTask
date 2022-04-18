@@ -4,4 +4,5 @@
         Balance: $('#user-balance').val()
     };
     await CreateUser(data);
+    await location.reload();
 }

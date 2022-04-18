@@ -20,4 +20,5 @@ async function CreateItem() {
     };
     console.log(data);
     await CreatePurchase(data);
+    await location.reload();
 }

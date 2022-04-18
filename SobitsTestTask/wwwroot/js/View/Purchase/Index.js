@@ -34,7 +34,8 @@ async function Payment(userByPurchaseId, purchaseId) {
          PurchaseId: purchaseId,
          UserId: userByPurchaseId
     };    
-     PaymentByUser(data);
+    PaymentByUser(data);
+    await location.reload();
 }
 
 function CreatePurchaseRow(userByPurchase, purchaseId) {
